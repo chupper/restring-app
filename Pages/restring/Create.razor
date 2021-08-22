@@ -1,0 +1,53 @@
+﻿@page "/restring/create/{userid:int}"
+
+@inject NavigationManager uriHelper
+@inject RestringAppContext context
+
+<div class="row">
+    <div class="col">
+        <h2>
+            Add Restring - @contact.FirstName @contact.LastName
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <RestringForm Restring="restring" EditContext="editContext" SubmitText="Create" OnSubmit="Submit" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int UserId { get; set; }
+
+    private EditContext editContext { get; set; }
+    private Restring restring { get; set; }
+    private Contact contact { get; set; }
+
+    protected override void OnInitialized()
+    {
+        contact = context.Contacts.Single(c => c.ContactId == UserId);
+
+        // lets just set a couple of defaults here
+        restring = new Restring()
+        {
+            ContactId = UserId,
+            PaymentAmount = 14,
+            TensionMains = 25, 
+            TensionCrosses = 27
+        };
+        editContext = new(restring);
+    }
+
+    private void Submit()
+    {
+        if (editContext.Validate())
+        {
+            contact.Restrings.Add(restring);
+            context.SaveChanges();
+
+            uriHelper.NavigateTo($"/contact/Edit/{restring.ContactId}");
+        }
+    }
+}

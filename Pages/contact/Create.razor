@@ -13,39 +13,9 @@
 
 <div class="row">
     <div class="col">
-        <EditForm EditContext="editContext" OnSubmit="Submit" class="pt-3">
-            <Validations Mode="ValidationMode.Auto" Model="@contact">
-                <Validation>
-                    <Field>
-                        <FieldLabel>First Name</FieldLabel>
-                        <FieldBody>
-                            <TextEdit Placeholder="First Name" @bind-Text="contact.FirstName">
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
-                            </TextEdit>
-                        </FieldBody>
-                    </Field>
-                </Validation>
-                <Validation>
-                    <Field>
-                        <FieldLabel>Last Name</FieldLabel>
-                        <FieldBody>
-                            <TextEdit Placeholder="Last Name" @bind-Text="contact.LastName">
-                                <Feedback>
-                                    <ValidationError />
-                                </Feedback>
-                            </TextEdit>
-                        </FieldBody>
-                    </Field>
-                </Validation>
-                <Button Color="Color.Primary">Create</Button>
-            </Validations>
-        </EditForm>
+        <ContactForm Contact="contact" EditContext="editContext" SubmitText="Create" OnSubmit="Submit"/>
     </div>
 </div>
-
-
 
 @code {
     Contact contact = new Contact();

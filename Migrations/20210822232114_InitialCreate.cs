@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RestringApp.Migrations
 {
@@ -12,8 +13,8 @@ namespace RestringApp.Migrations
                 {
                     ContactId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -26,10 +27,16 @@ namespace RestringApp.Migrations
                 {
                     RestringId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RacketBrand = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    RacketModel = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Tension = table.Column<int>(type: "int", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RacketBrand = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    RacketModel = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    String = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TensionCrosses = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
+                    TensionMains = table.Column<decimal>(type: "decimal(4,2)", nullable: false),
+                    DateStrung = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PaymentDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    PaymentAmount = table.Column<decimal>(type: "decimal(4,2)", nullable: true),
+                    PaymentNotes = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ContactId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>

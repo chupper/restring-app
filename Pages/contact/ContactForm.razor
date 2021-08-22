@@ -1,0 +1,44 @@
+﻿<EditForm EditContext="EditContext">
+    <Validations Mode="ValidationMode.Auto" Model="@Contact">
+        <input type="hidden" @bind-value="Contact.ContactId" />
+        <Validation>
+            <Field>
+                <FieldLabel>First Name</FieldLabel>
+                <FieldBody>
+                    <TextEdit Placeholder="First Name" @bind-Text="Contact.FirstName">
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </TextEdit>
+                </FieldBody>
+            </Field>
+        </Validation>
+        <Validation>
+            <Field>
+                <FieldLabel>Last Name</FieldLabel>
+                <FieldBody>
+                    <TextEdit Placeholder="Last Name" @bind-Text="Contact.LastName">
+                        <Feedback>
+                            <ValidationError />
+                        </Feedback>
+                    </TextEdit>
+                </FieldBody>
+            </Field>
+        </Validation>
+        <Button Color="Color.Primary" @onclick="OnSubmit">@SubmitText</Button>
+    </Validations>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Contact Contact { get; set; }
+
+    [Parameter]
+    public EditContext EditContext { get; set; }
+
+    [Parameter]
+    public string SubmitText { get; set; }
+
+    [Parameter]
+    public Action OnSubmit { get; set; }
+}

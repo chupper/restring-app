@@ -29,7 +29,7 @@
                 @foreach (var c in contacts)
                 {
                     <TableRow>
-                        <TableRowHeader><Icon Name="IconName.User" /></TableRowHeader>
+                        <TableRowHeader><a href="/contact/edit/@c.ContactId"><Icon Name="IconName.User" /></a></TableRowHeader>
                         <TableRowCell>@c.FirstName</TableRowCell>
                         <TableRowCell>@c.LastName</TableRowCell>
                     </TableRow>

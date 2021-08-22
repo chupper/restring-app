@@ -1,0 +1,94 @@
+@page "/contact/edit/{id:int}"
+
+@inject NavigationManager uriHelper
+@inject RestringAppContext context
+
+@using Microsoft.EntityFrameworkCore 
+
+<div class="row">
+    <div class="col">
+        <h2>
+            @contact.FirstName @contact.LastName 
+        </h2>
+    </div>
+</div>
+
+<div class="row pt-3">
+    <div class="col">
+        <ContactForm Contact="contact"  EditContext="editContext" SubmitText="Update" OnSubmit="Update" />
+    </div>
+</div>
+
+<div class="row pt-3">
+    <div class="col">
+        <h3>
+            Restrings
+        </h3>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        <Table Striped="true">
+            <TableHeader>
+                <TableRow>
+                    <TableHeaderCell style="width: 40px;">#</TableHeaderCell>
+                    <TableHeaderCell style="width: 100px;">Date</TableHeaderCell>
+                    <TableHeaderCell>Racket</TableHeaderCell>
+                    <TableHeaderCell>String</TableHeaderCell>
+                    <TableHeaderCell>Tension</TableHeaderCell>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                @foreach (var r in contact.Restrings)
+                {
+                <TableRow>
+                    <TableRowHeader><a href="/restring/edit/@r.RestringId"><Icon Name="IconName.Wrench" /></a></TableRowHeader>
+                    <TableRowCell>@r.DateStrung?.ToShortDateString()</TableRowCell>
+                    <TableRowCell>@r.RacketBrand - @r.RacketModel</TableRowCell>
+                    <TableRowCell>@r.String</TableRowCell>
+                    <TableRowCell>@r.TensionCrosses x @r.TensionMains</TableRowCell>
+                </TableRow>
+                }
+            </TableBody>
+        </Table>
+    </div>
+</div>
+
+<div class="row pt-3">
+    <div class="col">
+        <a href="/restring/create/@contact.ContactId"><Button Color="Color.Primary">Add Restring</Button></a>
+    </div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int Id { get; set; }
+
+    Contact contact;
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        // populate the contact from the database
+        contact = context.Contacts
+            .Include(c => c.Restrings)
+            .Single(c => c.ContactId == Id);
+
+        editContext = new EditContext(contact);
+        editContext.AddDataAnnotationsValidation();
+    }
+
+    void Update()
+    {
+        //  Using the Validations control to show the user the validations
+        if (editContext.Validate())
+        {
+            context.Update(contact);
+            context.SaveChanges();
+
+            uriHelper.NavigateTo("/");
+        }
+    }
+}

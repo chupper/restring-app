@@ -1,0 +1,41 @@
+﻿@page "/restring/edit/{restringid:int}"
+
+@inject NavigationManager uriHelper
+@inject RestringAppContext context
+
+<div class="row">
+    <div class="col">
+        <h2>
+            Restring - @restring.Contact.FirstName @restring.Contact.LastName
+        </h2>
+    </div>
+</div>
+
+<div class="row pt-3">
+    <div class="col">
+        <RestringForm Restring="restring" EditContext="editContext" SubmitText="Update" OnSubmit="Update" />
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int RestringId { get; set; }
+
+    private Restring restring { get; set; }
+    private EditContext editContext { get; set; }
+
+    protected override void OnInitialized()
+    {
+        restring = context.Restrings.Single(r => r.RestringId == RestringId);
+        editContext = new(restring);
+    }
+
+    private void Update()
+    {
+        if (editContext.Validate())
+        {
+            context.SaveChanges();
+            uriHelper.NavigateTo($"/contact/Edit/{restring.ContactId}");
+        }
+    }
+}

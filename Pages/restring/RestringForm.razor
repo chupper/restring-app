@@ -1,0 +1,138 @@
+﻿<EditForm EditContext="EditContext">
+    <Validations Mode="ValidationMode.Auto" Model="@Restring">
+        <input type="hidden" @bind-value="Restring.RestringId" />
+        <Div class="row">
+            <Div class="col-4">
+                <h5>Details</h5>
+                <Validation>
+                    <Field>
+                        <FieldLabel>Brand</FieldLabel>
+                        <FieldBody>
+                            <TextEdit @bind-Text="Restring.RacketBrand">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation>
+                    <Field>
+                        <FieldLabel>Model</FieldLabel>
+                        <FieldBody>
+                            <TextEdit @bind-Text="Restring.RacketModel">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation>
+                    <Field>
+                        <FieldLabel>String</FieldLabel>
+                        <FieldBody>
+                            <TextEdit @bind-Text="Restring.String">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Field>
+                    <FieldLabel>Date Strung</FieldLabel>
+                    <FieldBody>
+                        <DatePicker TValue="DateTime?" @bind-Date="Restring.DateStrung" DisplayFormat="dd/MM/yyyy">
+                        </DatePicker>
+                    </FieldBody>
+                </Field>
+            </Div>
+            <Div class="col-4">
+                <h5>Tension (lbs)</h5>
+                <Validation>
+                    <Field>
+                        <FieldLabel>Mains</FieldLabel>
+                        <FieldBody>
+                            <NumericEdit TValue="decimal?" Decimals="2" @bind-Value="Restring.TensionMains">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation>
+                    <Field>
+                        <FieldLabel>Crosses</FieldLabel>
+                        <FieldBody>
+                            <NumericEdit TValue="decimal?" Decimals="2" @bind-Value="Restring.TensionCrosses">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </NumericEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+            </Div>
+            <Div class="col-8">
+                <Field>
+                    <FieldLabel>Notes</FieldLabel>
+                    <FieldBody>
+                        <MemoEdit Rows="5" @bind-Text="Restring.Notes">
+                        </MemoEdit>
+                    </FieldBody>
+                </Field>
+            </Div>
+        </Div>
+
+        <Div>
+            <Div class="row">
+                <Div class="col-4">
+                    <h5>Payment Details</h5>
+                    <Field>
+                        <FieldLabel>Payment Date</FieldLabel>
+                        <FieldBody>
+                            <DatePicker TValue="DateTime?" @bind-Date="Restring.PaymentDate" DisplayFormat="dd/MM/yyyy">
+                            </DatePicker>
+                        </FieldBody>
+                    </Field>
+                    <Field>
+                        <FieldLabel>Payment Amount</FieldLabel>
+                        <FieldBody>
+                            <NumericEdit TValue="decimal?" Decimals="2" @bind-Value="Restring.PaymentAmount">
+                            </NumericEdit>
+                        </FieldBody>
+                    </Field>
+                </Div>
+            </Div>
+            <Div class="row">
+                <Div class="col-8">
+                    <Field>
+                        <FieldLabel>Payment Notes</FieldLabel>
+                        <FieldBody>
+                            <MemoEdit Rows="5" @bind-Text="Restring.PaymentNotes">
+                            </MemoEdit>
+                        </FieldBody>
+                    </Field>
+                </Div>
+            </Div>
+        </Div>
+
+        <Button Color="Color.Primary" @onclick="OnSubmit">@SubmitText</Button>
+    </Validations>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Restring Restring { get; set; }
+
+    [Parameter]
+    public EditContext EditContext { get; set; }
+
+    [Parameter]
+    public Action OnSubmit { get; set; }
+
+    [Parameter]
+    public string SubmitText { get; set; }
+}
