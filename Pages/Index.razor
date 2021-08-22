@@ -1,0 +1,53 @@
+@page "/"
+
+@inject RestringAppContext context
+@inject NavigationManager uriHelper
+
+<div class="row">
+    <div class="col">
+        <h2>Contacts</h2>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <div class="col">
+        <Button Color="Color.Primary" @onclick="Create">Create</Button>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        <Table Striped="true">
+            <TableHeader>
+                <TableRow>
+                    <TableHeaderCell style="width: 40px;">#</TableHeaderCell>
+                    <TableHeaderCell>First Name</TableHeaderCell>
+                    <TableHeaderCell>Last Name</TableHeaderCell>
+                </TableRow>
+            </TableHeader>
+            <TableBody>
+                @foreach (var c in contacts)
+                {
+                    <TableRow>
+                        <TableRowHeader><Icon Name="IconName.User" /></TableRowHeader>
+                        <TableRowCell>@c.FirstName</TableRowCell>
+                        <TableRowCell>@c.LastName</TableRowCell>
+                    </TableRow>
+                }
+            </TableBody>
+        </Table>
+    </div>
+</div>
+
+@code {
+    private List<Contact> contacts { get; set; }
+
+    protected override void OnInitialized()
+    {
+        contacts = context.Contacts.ToList();
+    }
+
+    void Create() {
+        uriHelper.NavigateTo("/contact/create");
+    }
+}

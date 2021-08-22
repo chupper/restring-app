@@ -1,0 +1,71 @@
+@page "/contact/create"
+
+@inject NavigationManager uriHelper
+@inject RestringAppContext context
+
+<div class="row">
+    <div class="col">
+        <h2>
+            Add Contact
+        </h2>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <EditForm EditContext="editContext" OnSubmit="Submit" class="pt-3">
+            <Validations Mode="ValidationMode.Auto" Model="@contact">
+                <Validation>
+                    <Field>
+                        <FieldLabel>First Name</FieldLabel>
+                        <FieldBody>
+                            <TextEdit Placeholder="First Name" @bind-Text="contact.FirstName">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Validation>
+                    <Field>
+                        <FieldLabel>Last Name</FieldLabel>
+                        <FieldBody>
+                            <TextEdit Placeholder="Last Name" @bind-Text="contact.LastName">
+                                <Feedback>
+                                    <ValidationError />
+                                </Feedback>
+                            </TextEdit>
+                        </FieldBody>
+                    </Field>
+                </Validation>
+                <Button Color="Color.Primary">Create</Button>
+            </Validations>
+        </EditForm>
+    </div>
+</div>
+
+
+
+@code {
+    Contact contact = new Contact();
+    private EditContext editContext;
+
+    protected override void OnInitialized()
+    {
+        editContext = new EditContext(contact);
+        editContext.AddDataAnnotationsValidation();
+    }
+
+    void Submit()
+    {
+        //  Using the Validations control to show the user the validations
+        if (editContext.Validate())
+        {
+            context.Add(contact);
+            context.SaveChanges();
+
+            uriHelper.NavigateTo("/");
+        }
+    }
+}
